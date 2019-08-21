@@ -9,6 +9,12 @@ class CPU:
         """Construct a new CPU."""
         pass
 
+    def ram_read(self):
+        pass
+
+    def ram_write(self):
+        pass
+        
     def load(self):
         """Load a program into memory."""
 
