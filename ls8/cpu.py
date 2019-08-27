@@ -10,11 +10,11 @@ class CPU:
         self.reg = reg # index is register
         self.pc = pc #program counter
 
-    def ram_read(self):
-        pass
+    def ram_read(self, address):
+        return self.ram[address]
 
-    def ram_write(self):
-        pass
+    def ram_write(self, value, address):
+        self.ram[address] = value
 
     def load(self):
         """Load a program into memory."""
