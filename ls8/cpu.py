@@ -4,17 +4,18 @@ import sys
 
 class CPU:
     """Main CPU class."""
-
-    def __init__(self):
+    def __init__(self, ram = [0] * 256, reg = [0] * 8, pc = 0):
         """Construct a new CPU."""
-        pass
+        self.ram = ram # 256 bytes, index == 1 byte
+        self.reg = reg # index is register
+        self.pc = pc #program counter
 
     def ram_read(self):
         pass
 
     def ram_write(self):
         pass
-        
+
     def load(self):
         """Load a program into memory."""
 
@@ -68,4 +69,10 @@ class CPU:
 
     def run(self):
         """Run the CPU."""
+        # while running:
+        #     command = memory[PC]
+        #     if command == LDI:
+        #         print(LDI)
+
+          
         pass
