@@ -4,16 +4,16 @@ import sys
 
 class CPU:
     """Main CPU class."""
-    def __init__(self, ram = [0] * 256, reg = [0] * 8, pc = 0):
+    def __init__(self):
         """Construct a new CPU."""
-        self.ram = ram # 256 bytes, index == 1 byte
-        self.reg = reg # index is register
-        self.pc = pc #program counter
+        self.ram = [0] * 256 # 256 bytes, index == 1 byte
+        self.reg = [0] * 8 # index is register
+        self.pc = 0 #program counter
 
     def ram_read(self, address):
-        return self.ram[address]
+        return self.ram[address] # getting something from this address and accessing the value
 
-    def ram_write(self, value, address):
+    def ram_write(self, address, value):
         self.ram[address] = value
 
     def load(self):
@@ -74,26 +74,29 @@ class CPU:
         LDI = 0b10000010
         PRN = 0b01000111
         HLT = 0b00000001
-        MUL = 0b10100010
 
         while running:
             command = self.ram[self.pc]
             operand_a = self.ram_read(self.pc +1)
             operand_b = self.ram_read(self.pc + 2)
 
+            op_size = command >> 6
+
             if command == LDI:
                 self.reg[operand_a] = [operand_b]
-                self.pc += 3
+                # self.pc += 3
 
             if command == PRN:
                 print(self.reg[operand_a])
-                self.pc += 2
+                # self.pc += 2
 
             elif command == HLT:
                 running = False
 
-            else:
-                print(f"Unknown instruction: {command}")
-                sys.exit(1)
+            self.pc += op_size + 1
+
+            # else:
+            #     print(f"Unknown instruction: {command}")
+            #     sys.exit()
 
 
