@@ -8,6 +8,8 @@ MUL = 0b10100010
 PRN = 0b01000111
 PUSH = 0b01000101
 POP = 0b01000110
+CALL = 0b01010000
+RET = 0b00010001
 
 
 class CPU:
@@ -27,8 +29,13 @@ class CPU:
             MUL: self.op_mul,
             PRN: self.op_prn,
             PUSH: self.op_push,
-            POP: self.op_pop
+            POP: self.op_pop,
+            CALL: self.op_call,
+            RET: self.op_ret
         }
+
+    def op_call(self, operand_a, operand_b):
+        pass
 
     def op_hlt(self, operand_a, operand_b):
         self.hlt = True
@@ -52,6 +59,9 @@ class CPU:
 
     def op_prn(self, operand_a, operand_b):
         print(self.reg[operand_a])
+
+    def op_ret(self, operand_a, operand_b):
+        pass
 
     def ram_read(self, address):
         # getting something from this address and accessing the value
