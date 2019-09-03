@@ -6,6 +6,8 @@ HLT = 0b00000001  # listed alphabetically
 LDI = 0b10000010
 MUL = 0b10100010
 PRN = 0b01000111
+PUSH = 0b01000101
+POP = 0b01000110
 
 
 class CPU:
@@ -22,6 +24,8 @@ class CPU:
             LDI: self.op_ldi,
             MUL: self.op_mul,
             PRN: self.op_prn,
+            PUSH: self.op_push,
+            POP: self.op_pop
         }
 
     def op_hlt(self, operand_a, operand_b):
@@ -32,6 +36,12 @@ class CPU:
 
     def op_mul(self, operand_a, operand_b):
         self.alu('MUL', operand_a, operand_b)
+
+    def op_push(self, operand_a, operand_b):
+        pass
+
+    def op_pop(self, operand_a, operand_b):
+        pass
 
     def op_prn(self, operand_a, operand_b):
         print(self.reg[operand_a])
