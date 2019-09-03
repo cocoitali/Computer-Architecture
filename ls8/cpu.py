@@ -37,15 +37,25 @@ class CPU:
         self.reg[operand_a] = operand_b
 
     def op_mul(self, operand_a, operand_b):
-        self.alu('MUL', operand_a, operand_b)
+        self.alu('MUL', operand_a, operand_b) 
 
     def op_push(self, operand_a, operand_b):
         operand_a = self.ram_read(self.pc + 1)
         # not done yet
+        self.ram[self.sp] = self.reg[operand_a]
+        self.sp -= 1
+        self.ram_write(self.sp, self.ram[self.sp])
 
     def op_pop(self, operand_a, operand_b):
         operand_a = self.ram_read(self.pc + 1)
         # not done yet
+        if self.sp == 0xF4:
+            print("Stack is empty")
+            sys.exit(1)
+        else:
+            self.sp += 1
+            self.reg[operand_a] = self.ram[self.sp]
+            self.pc += 2
 
     def op_prn(self, operand_a, operand_b):
         print(self.reg[operand_a])
@@ -98,9 +108,10 @@ class CPU:
         """ALU operations."""
 
         if op == "ADD":
-            self.reg[reg_a] += self.reg[reg_b]
+            self.reg[reg_a] += self.reg[reg_b] 
         elif op == "MUL":  # add multiply instruction
-            self.reg[reg_a] *= self.reg[reg_b]
+            self.reg[reg_a] *= self.reg[reg_b] 
+            
         else:
             raise Exception("Unsupported ALU operation")
 
