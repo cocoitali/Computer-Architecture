@@ -19,7 +19,9 @@ class CPU:
         self.reg = [0] * 8  # index is register
         self.pc = 0  # program counter
         self.hlt = False
-        self.ops = { # branch table
+        # SP points at the value at the top of the stack (most recently pushed), or address `F4` if the stack is empty
+        self.sp = 0xF4
+        self.ops = {  # branch table
             HLT: self.op_hlt,
             LDI: self.op_ldi,
             MUL: self.op_mul,
@@ -38,10 +40,12 @@ class CPU:
         self.alu('MUL', operand_a, operand_b)
 
     def op_push(self, operand_a, operand_b):
-        pass
+        operand_a = self.ram_read(self.pc + 1)
+        # not done yet
 
     def op_pop(self, operand_a, operand_b):
-        pass
+        operand_a = self.ram_read(self.pc + 1)
+        # not done yet
 
     def op_prn(self, operand_a, operand_b):
         print(self.reg[operand_a])
@@ -95,7 +99,7 @@ class CPU:
 
         if op == "ADD":
             self.reg[reg_a] += self.reg[reg_b]
-        elif op == "MUL": # add multiply instruction
+        elif op == "MUL":  # add multiply instruction
             self.reg[reg_a] *= self.reg[reg_b]
         else:
             raise Exception("Unsupported ALU operation")
@@ -130,7 +134,7 @@ class CPU:
             operand_b = self.ram_read(self.pc + 2)
 
             op_size = command >> 6  # how many operands included in this instruction
-            op_set = ((command >> 4) & 0b1) == 1 
+            op_set = ((command >> 4) & 0b1) == 1
 
             # if command == HLT:
             #     running = False
