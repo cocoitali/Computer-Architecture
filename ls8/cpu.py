@@ -2,6 +2,7 @@
 
 import sys
 
+ADD  = 0b10100000
 HLT = 0b00000001  # listed alphabetically
 LDI = 0b10000010
 MUL = 0b10100010
@@ -24,6 +25,7 @@ class CPU:
         # SP points at the value at the top of the stack (most recently pushed), or address `F4` if the stack is empty
         self.reg[SP] = 0xF3
         self.ops = {  # branch table
+            ADD: self.op_add,
             HLT: self.op_hlt,
             LDI: self.op_ldi,
             MUL: self.op_mul,
@@ -101,6 +103,9 @@ class CPU:
             print(" %02X" % self.reg[i], end='')
 
         print()
+
+    def op_add(self, operand_a, operand_b):
+        self.alu('ADD', operand_a, operand_b)
 
     def op_call(self, operand_a, operand_b):
         next_instruction_address = self.pc + 2
